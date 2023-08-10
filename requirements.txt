@@ -1,5 +1,6 @@
-pymango[srv]==4.2.0
+pymongo[srv]==4.2.0
 pandas
 numpy
-
+scikit-learn
+pyyaml
 -e .

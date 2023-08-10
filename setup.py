@@ -1,19 +1,19 @@
 from setuptools import setup, find_packages
 
-def get_requirements()->str:
 
-    file_path = "C:\Users\hp\Desktop\Sensor-Fault-Detection\requirements.txt"
+def get_requirements() -> str:
+
+    file_path = "C:\\Users\\hp\\Desktop\\Sensor-Fault-Detection\\requirements.txt"
 
     HypenEDot = '-e .'
 
-    file = open(file_path,'r')
+    file = open(file_path, 'r')
 
     install_requirements = []
 
     for req in file.readlines():
-        install_requirements.append(str(req.replace('\n',' ')))
+        install_requirements.append(str(req.replace('\n', ' ')))
 
-    
     return install_requirements.remove(HypenEDot)
 
 
