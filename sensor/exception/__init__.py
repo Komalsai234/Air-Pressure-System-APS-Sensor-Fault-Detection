@@ -1,7 +1,7 @@
 import sys
 
 
-def error_message_detail(error, error_message: sys):
+def error_message_detail(error, error_message):
 
     _, _, exec_itr = error_message.exc_info()
     file_name = exec_itr.tb_frame.f_code.co_filename
@@ -11,7 +11,7 @@ def error_message_detail(error, error_message: sys):
 
 class exception(Exception):
 
-    def __init__(self, error_meassage, error_detail: sys):
+    def __init__(self, error_meassage, error_detail):
         super.__init__(Exception)
 
         self.error = error_message_detail(error_meassage, error_detail)

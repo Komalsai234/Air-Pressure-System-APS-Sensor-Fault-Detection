@@ -71,7 +71,7 @@ class DataIngestion:
         except Exception as e:
             exception(e, sys)
 
-    def initiate_data_ingestion(self):
+    def initiate_data_ingestion(self) -> DataIngestionArtifact:
 
         try:
 
