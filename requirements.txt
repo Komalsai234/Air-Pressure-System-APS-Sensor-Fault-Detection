@@ -4,4 +4,6 @@ numpy
 scikit-learn
 pyyaml
 scipy
+imbalanced-learn==0.10.1
+joblib
 -e .
