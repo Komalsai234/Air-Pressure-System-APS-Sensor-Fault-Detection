@@ -8,9 +8,9 @@ FILE_NAME = "sensor.csv"
 TRAIN_FILE_NAME = "train.csv"
 TEST_FILE_NAME = "test.csv"
 
-PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.pkl"
+PREPROCSSING_OBJECT_FILE_NAME = "preprocessing.joblib"
 
-MODEL_FILE_NAME = "model.pkl"
+MODEL_FILE_NAME = "model.joblib"
 
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
 
@@ -41,3 +41,11 @@ DATA_VALIDATION_DRIFT_REPORT_FILE_NAME: str = "report.yaml"
 DATA_TRANSFORMATION_DIR_NAME: str = "data_transformation"
 DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR: str = "transformed"
 DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR: str = "transformed_object"
+
+# Model Trainer related variable
+
+MODEL_TRAINER_DIR_NAME: str = "model_trainer"
+MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
+MODEL_TRAINER_TRAINED_MODEL_OBJ: str = "model.joblib"
+MODEL_TRAINER_EXCEPTED_SCORE: int = 0.6
+MODEL_TRAINER_UNDER_AND_OVERFIT_THRESHOLD: int = 0.5

@@ -4,9 +4,9 @@ from sensor.logger import logging
 from sensor.exception import exception
 
 from sensor.constant.training_pipeline import *
-from sensor.entity.artifact_entity import DataValidationArtifact
+from sensor.entity.artifact_entity import DataValidationArtifact, DataTranformationArtifact
 from sensor.entity.config_entity import DataTransformationConfig
-from sensor.untils.main_unitls import load_numpy_file, save_numpy_as_file
+from sensor.untils.main_unitls import load_numpy_file, save_numpy_as_file, save_obj_as_file
 from sensor.ml.model.estimator import Target_Value_Encoder
 
 from sklearn.impute import SimpleImputer
@@ -54,7 +54,7 @@ class DataTransformation:
 
         return transformation_pipeline
 
-    def initiate_data_transformation(self):
+    def initiate_data_transformation(self) -> DataTranformationArtifact:
 
         logging.info("Starting Data Tranformation")
 
@@ -73,7 +73,7 @@ class DataTransformation:
             test_df_features = test_df.drop(TARGET_COLUMN, axis=-1)
             test_df_target = test_df[TARGET_COLUMN]
 
-            tranformation_obj = self.get_data_transformation_object()
+            transformation_obj = self.get_data_transformation_object()
 
             logging.info(
                 "Transforming the labels(neg,pos) of target varaibles into 1 and 0")
@@ -120,7 +120,15 @@ class DataTransformation:
                 self.data_transformation_config.data_transformation_testing_file_path, test_arr)
 
             logging.info("Saving the Pre-processing object")
-            sa
+
+            save_obj_as_file(
+                DataTransformationConfig.data_transformation_obj_file_path, transformation_obj)
+
+            return DataTranformationArtifact(
+                transformed_preprocessed_obj_file_path=self.data_transformation_config.data_transformation_obj_file_path,
+                transformed_train_file_path=self.data_transformation_config.data_transformation_training_file_path,
+                transformed_test_file_path=self.data_transformation_config.data_transformation_testing_file_path
+            )
 
         except Exception as e:
             raise exception(e, sys)

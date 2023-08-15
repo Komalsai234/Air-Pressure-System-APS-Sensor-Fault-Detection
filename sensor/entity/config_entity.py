@@ -84,5 +84,17 @@ class DataTransformationConfig:
     data_transformation_testing_file_path: str = os.path.join(
         training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR, TEST_FILE_NAME.replace('csv', 'txt'))
 
-    data_transformation_obj_dir = os.path.join(
-        training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME, DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR)
+    data_transformation_obj_file_path = os.path.join(
+        training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME, DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR, PREPROCSSING_OBJECT_FILE_NAME)
+
+
+@dataclass
+class ModelTrainerConfig:
+    model_trainer_dir: str = os.path.join(
+        training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME)
+
+    model_trainer_trained_model_dir = os.path.join(
+        model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR)
+
+    model_trainer_trained_model_obj = os.path.join(
+        model_trainer_trained_model_dir, MODEL_TRAINER_TRAINED_MODEL_OBJ)

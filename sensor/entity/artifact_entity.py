@@ -22,3 +22,8 @@ class DataTranformationArtifact():
     transformed_preprocessed_obj_file_path: str
     transformed_train_file_path: str
     transformed_test_file_path: str
+
+
+@dataclass
+class ModelTrainerArtifact():
+    trained_model_obj_path: str
