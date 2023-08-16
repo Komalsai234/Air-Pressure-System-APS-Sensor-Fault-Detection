@@ -2,13 +2,13 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DataIngestionArtifact():
+class DataIngestionArtifact:
     trained_file_path: str
     test_file_path: str
 
 
 @dataclass
-class DataValidationArtifact():
+class DataValidationArtifact:
     validation_status: bool
     valid_train_path: str
     valid_test_path: str
@@ -18,12 +18,20 @@ class DataValidationArtifact():
 
 
 @dataclass
-class DataTranformationArtifact():
+class DataTranformationArtifact:
     transformed_preprocessed_obj_file_path: str
     transformed_train_file_path: str
     transformed_test_file_path: str
 
 
 @dataclass
-class ModelTrainerArtifact():
+class ModelEvalutionMetrics:
+    model_f1_score: int
+    model_precision_score: int
+    model_recall_score: int
+
+
+@dataclass
+class ModelTrainerArtifact:
     trained_model_obj_path: str
+    model_metrics: ModelEvalutionMetrics

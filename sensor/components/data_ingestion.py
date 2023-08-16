@@ -13,7 +13,7 @@ from sensor.untils.main_unitls import read_yaml_file
 
 class DataIngestion:
 
-    def __init__(self, data_ingestion_config=DataIngestionConfig()):
+    def __init__(self, data_ingestion_config=DataIngestionConfig):
 
         self.data_ingestion_config = data_ingestion_config
 

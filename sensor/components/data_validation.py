@@ -26,9 +26,12 @@ class DataValidation:
     def validate_columns(self, dataframe: pd.DataFrame):
 
         try:
-            status = (len(self.schema_file['columns']) == len(dataframe))
+            status = (len(self.schema_file['columns']) == len(
+                dataframe.columns))
 
             logging.info(f"{status} : The status of validate columns")
+
+            return status
 
         except Exception as e:
             exception(e, sys)
@@ -70,7 +73,7 @@ class DataValidation:
             report = {}
 
             for col in base_dataframe.columns:
-                result = ks_2samp(base_dataframe['col'], base_dataframe['col'])
+                result = ks_2samp(base_dataframe[col], compare_dataframe[col])
 
                 drift_status: bool = True
 
@@ -87,10 +90,11 @@ class DataValidation:
                     report.update({col: {"statistic": result.statistic,
                                          "p-value": result.pvalue, "drift": is_found}})
 
-            os.makedirs(os.path.dirname(report_path), exist_ok=True)
+            report_file_dir = os.path.dirname(report_path)
 
-            write_yaml_file(DATA_VALIDATION_DRIFT_REPORT_FILE_NAME,
-                            report, replace=False)
+            os.makedirs(report_file_dir, exist_ok=True)
+
+            write_yaml_file(report_path, report, replace=False)
 
             return drift_status
 
@@ -104,11 +108,15 @@ class DataValidation:
 
             train_data_frame = self.read_data(
                 self.data_ingestion_artifact.trained_file_path)
+
             test_data_frame = self.read_data(
                 self.data_ingestion_artifact.test_file_path)
 
             status_validate_columns_train = self.validate_columns(
                 train_data_frame)
+
+            logging.info("Started Validating the Dataframes")
+
             if not status_validate_columns_train:
                 raise Exception("Validating Columns in Training Data failed")
 
@@ -132,7 +140,7 @@ class DataValidation:
             status = self.detect_data_drift(
                 train_data_frame, test_data_frame, self.data_validation_config.drift_report_file_path)
 
-            data_ingestion_artifact = DataIngestionArtifact(
+            data_validation_artifact = DataValidationArtifact(
                 status,
                 self.data_ingestion_artifact.trained_file_path,
                 self.data_ingestion_artifact.test_file_path,
@@ -140,7 +148,7 @@ class DataValidation:
                 None,
                 self.data_validation_config.drift_report_file_path)
 
-            return data_ingestion_artifact
+            return data_validation_artifact
 
         except Exception as e:
             exception(e, sys)

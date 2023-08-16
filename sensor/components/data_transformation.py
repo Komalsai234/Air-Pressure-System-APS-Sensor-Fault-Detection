@@ -31,13 +31,12 @@ class DataTransformation:
 
     def read_csv_file(self, file_path: str) -> pd.DataFrame:
         try:
-            df = pd.DataFrame(file_path)
+            df = pd.read_csv(file_path)
             return df
 
         except Exception as e:
             raise exception(e, sys)
 
-    @staticmethod
     def get_data_transformation_object(self):
 
         logging.info(
@@ -67,20 +66,20 @@ class DataTransformation:
 
             logging.info("Dropping the target column for transformation")
 
-            train_df_features = train_df.drop(TARGET_COLUMN, axis=-1)
+            train_df_features = train_df.drop(TARGET_COLUMN, axis=1)
             train_df_target = train_df[TARGET_COLUMN]
 
-            test_df_features = test_df.drop(TARGET_COLUMN, axis=-1)
+            test_df_features = test_df.drop(TARGET_COLUMN, axis=1)
             test_df_target = test_df[TARGET_COLUMN]
-
-            transformation_obj = self.get_data_transformation_object()
 
             logging.info(
                 "Transforming the labels(neg,pos) of target varaibles into 1 and 0")
 
-            train_df_target = Target_Value_Encoder.Target_column_encoding(
+            self.target_value_encoding = Target_Value_Encoder()
+
+            train_df_target = self.target_value_encoding.target_column_encoding(
                 train_df_target)
-            test_df_target = Target_Value_Encoder.Target_column_encoding(
+            test_df_target = self.target_value_encoding.target_column_encoding(
                 test_df_target)
 
             transformation_obj = self.get_data_transformation_object()

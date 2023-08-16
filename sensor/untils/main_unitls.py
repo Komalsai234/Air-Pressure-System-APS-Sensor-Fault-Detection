@@ -18,16 +18,16 @@ def read_yaml_file(file_path: str) -> dict:
         exception(e, sys)
 
 
-def write_yaml_file(file_path: str, content: dict, replace: bool):
+def write_yaml_file(file_path: str, content, replace: bool):
     try:
         if replace:
             if os.path.exists(file_path):
                 os.remove(file_path)
 
-        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
         with open(file_path, "w") as file:
-            yaml.dump(file, content)
+            yaml.dump(content, file)
 
     except Exception as e:
         exception(e, sys)
@@ -62,6 +62,10 @@ def load_numpy_file(file_path: str) -> np.array:
 def save_obj_as_file(file_path: str, object):
 
     try:
+        if not os.path.exists(file_path):
+            file_path_dir = os.path.dirname(file_path)
+            os.makedirs(file_path_dir)
+
         joblib.dump(object, file_path)
 
     except Exception as e:
