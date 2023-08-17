@@ -91,10 +91,10 @@ class DataTransformationConfig:
 @dataclass
 class ModelTrainerConfig:
     model_trainer_dir: str = os.path.join(
-        training_pipeline_config.artifact_dir, DATA_TRANSFORMATION_DIR_NAME)
+        training_pipeline_config.artifact_dir, MODEL_TRAINER_DIR_NAME)
 
     model_trainer_trained_model_dir = os.path.join(
         model_trainer_dir, MODEL_TRAINER_TRAINED_MODEL_DIR)
 
-    model_trainer_trained_model_obj = os.path.join(
+    model_trainer_trained_model_obj_path = os.path.join(
         model_trainer_trained_model_dir, MODEL_TRAINER_TRAINED_MODEL_OBJ)

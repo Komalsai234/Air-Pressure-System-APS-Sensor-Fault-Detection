@@ -50,10 +50,11 @@ def save_numpy_as_file(file_path: str, array: np.array):
 def load_numpy_file(file_path: str) -> np.array:
 
     try:
-        with open(file_path, "rb") as file:
-            array = np.load(file)
+        if os.path.exists(file_path):
+            with open(file_path, "rb") as file:
+                array = np.load(file)
 
-        return array
+            return array
 
     except Exception as e:
         raise exception(e, sys)
@@ -62,7 +63,7 @@ def load_numpy_file(file_path: str) -> np.array:
 def save_obj_as_file(file_path: str, object):
 
     try:
-        if not os.path.exists(file_path):
+        if not os.path.exists(os.path.dirname(file_path)):
             file_path_dir = os.path.dirname(file_path)
             os.makedirs(file_path_dir)
 
@@ -70,3 +71,13 @@ def save_obj_as_file(file_path: str, object):
 
     except Exception as e:
         raise exception(e, sys)
+
+
+def load_obj_file(file_path: str):
+    try:
+        if os.path.exists(file_path):
+            obj = joblib.load(file_path)
+            return obj
+
+    except Exception as e:
+        exception(e, sys)
