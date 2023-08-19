@@ -16,6 +16,8 @@ SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
 
 SCHEMA_DROP_COLS = "drop_columns"
 
+SAVED_MODEL_DIR = os.path.join("saved_models")
+
 # Data Ingestion related variables
 
 DATA_INGESTION_COLLECTION_NAME: str = "My_Collection"
@@ -49,3 +51,10 @@ MODEL_TRAINER_TRAINED_MODEL_DIR: str = "trained_model"
 MODEL_TRAINER_TRAINED_MODEL_OBJ: str = "model.joblib"
 MODEL_TRAINER_EXCEPTED_SCORE: int = 0.6
 MODEL_TRAINER_UNDER_AND_OVERFIT_THRESHOLD: int = 0.5
+
+
+# Variable related to Model Evalution
+
+MODEL_EVALUTION_DIR_NAME: str = "model_evalution"
+MODEL_EVALATION_BETTER_MODEL_THRESHOLD: float = 0.02
+MODEL_EVALTION_REPORT_FILE_NAME: str = "model_report.yaml"

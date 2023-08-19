@@ -98,3 +98,14 @@ class ModelTrainerConfig:
 
     model_trainer_trained_model_obj_path = os.path.join(
         model_trainer_trained_model_dir, MODEL_TRAINER_TRAINED_MODEL_OBJ)
+
+
+@dataclass
+class ModelEvalutionConfig:
+    model_evaltion_dir = os.path.join(
+        training_pipeline_config.artifact_dir, MODEL_EVALUTION_DIR_NAME)
+
+    model_evalution_report_file_path = os.path.join(
+        model_evaltion_dir, MODEL_EVALTION_REPORT_FILE_NAME)
+
+    model_evaltion_best_model_threshold = MODEL_EVALATION_BETTER_MODEL_THRESHOLD

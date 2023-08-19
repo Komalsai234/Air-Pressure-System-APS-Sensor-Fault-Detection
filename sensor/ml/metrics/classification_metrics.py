@@ -1,6 +1,6 @@
 from sensor.exception import exception
 
-from sklearn.metrics import f1_score, precision_score, recall_score
+from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
 from sensor.entity.artifact_entity import ModelEvalutionMetrics
 
 import os
@@ -22,3 +22,9 @@ def get_classification_metrics(y_true, y_pred) -> ModelEvalutionMetrics:
 
     except Exception as e:
         raise exception(e, sys)
+
+
+def get_classification_score(y_true, y_pred):
+    classification_score = accuracy_score(y_true, y_pred)
+
+    return classification_score

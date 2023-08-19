@@ -35,3 +35,13 @@ class ModelEvalutionMetrics:
 class ModelTrainerArtifact:
     trained_model_obj_path: str
     model_metrics: ModelEvalutionMetrics
+
+
+@dataclass
+class ModelEvalutionArtifact:
+    is_model_accepted: bool
+    model_improved_accuracy: float
+    best_model_file_path: str
+    trained_model_file_path: str
+    best_model_evalution_metrics: ModelEvalutionMetrics
+    trained_model_evalution_metrics: ModelEvalutionMetrics
