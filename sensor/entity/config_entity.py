@@ -4,6 +4,8 @@ from datetime import datetime
 
 from sensor.constant.training_pipeline import *
 
+from datetime import datetime
+
 TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 
 
@@ -109,3 +111,15 @@ class ModelEvalutionConfig:
         model_evaltion_dir, MODEL_EVALTION_REPORT_FILE_NAME)
 
     model_evaltion_best_model_threshold = MODEL_EVALATION_BETTER_MODEL_THRESHOLD
+
+
+@dataclass
+class ModelPusherConfig:
+    model_pusher_dir = os.path.join(
+        training_pipeline_config.artifact_dir, MODEL_PUSHER_DIR_NAME)
+    pusher_saved_model_file_path = os.path.join(
+        model_pusher_dir, MODEL_FILE_NAME)
+    time_stamp = datetime.now()
+    time_stamp = int(time_stamp.timestamp())
+    saved_model_dir_file_path = os.path.join(
+        SAVED_MODEL_DIR, f"{time_stamp}", MODEL_FILE_NAME)

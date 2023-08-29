@@ -36,7 +36,7 @@ class SensorModelTrainer:
 
 class TrainedModelResolver:
 
-    def __init__(self, saved_model_dir: SAVED_MODEL_DIR):
+    def __init__(self, saved_model_dir=SAVED_MODEL_DIR):
         self.saved_model_dir = saved_model_dir
 
     def get_best_model_file_path(self):
@@ -60,7 +60,7 @@ class TrainedModelResolver:
             if not os.path.exists(self.saved_model_dir):
                 return False
 
-            if len(os.listdir(self.saved_model_dir) == 0):
+            if len(os.listdir(self.saved_model_dir)) == 0:
                 return False
 
             latest_model_path = self.get_best_model_file_path

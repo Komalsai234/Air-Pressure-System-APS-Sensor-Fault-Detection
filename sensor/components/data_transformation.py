@@ -61,6 +61,11 @@ class DataTransformation:
 
             train_df = self.read_csv_file(
                 self.data_validation_artifact.valid_train_path)
+
+            logging.info("*******")
+            logging.info(self.data_validation_artifact.valid_train_path)
+            logging.info("*******")
+
             test_df = self.read_csv_file(
                 self.data_validation_artifact.valid_test_path)
 

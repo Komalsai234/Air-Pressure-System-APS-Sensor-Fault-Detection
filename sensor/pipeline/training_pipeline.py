@@ -4,13 +4,15 @@ import sys
 from sensor.logger import logging
 from sensor.exception import exception
 
-from sensor.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig
-from sensor.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTranformationArtifact, ModelTrainerArtifact
+from sensor.entity.config_entity import TrainingPipelineConfig, DataIngestionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig, ModelEvalutionConfig, ModelPusherConfig
+from sensor.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact, DataTranformationArtifact, ModelTrainerArtifact, ModelEvalutionArtifact, ModelPusherArtifact
 
 from sensor.components.data_ingestion import DataIngestion
 from sensor.components.data_validation import DataValidation
 from sensor.components.data_transformation import DataTransformation
 from sensor.components.model_trainer import ModelTrainer
+from sensor.components.model_evalution import ModelEvalution
+from sensor.components.model_pusher import ModelPusher
 
 
 class TrainPipeline:
@@ -79,6 +81,33 @@ class TrainPipeline:
         except Exception as e:
             raise exception(e, sys)
 
+    def start_model_evalution(self, model_trainer_artifact: ModelTrainerArtifact, data_validation_artifact: DataValidationArtifact) -> ModelEvalutionArtifact:
+        try:
+            logging.info("Starting Model Evalution")
+            start_model_eval = ModelEvalution(
+                model_trainer_artifact, ModelEvalutionConfig, data_validation_artifact)
+
+            model_evalution_artifact = start_model_eval.initiate_model_evalution()
+
+            return model_evalution_artifact
+
+        except Exception as e:
+            raise exception(e, sys)
+
+    def start_model_pusher(self, model_evalution_artifact: ModelEvalutionArtifact) -> ModelPusherArtifact:
+        try:
+            logging.info("Starting Model Pusher")
+
+            model_pusher = ModelPusher(
+                model_evalution_artifact, ModelPusherConfig)
+
+            model_pusher_artifact = model_pusher.initiate_model_pusher()
+
+            return model_pusher_artifact
+
+        except Exception as e:
+            raise exception(e, sys)
+
     def run_pipeline(self) -> None:
         try:
             data_ingestion_artifact = self.start_data_ingestion()
@@ -91,6 +120,12 @@ class TrainPipeline:
 
             model_training_artifact = self.start_model_training(
                 data_transformation_artifact)
+
+            model_evalution_artifact = self.start_model_evalution(
+                model_training_artifact, data_validation_artifact)
+
+            model_pusher_artifact = self.start_model_pusher(
+                model_evalution_artifact)
 
         except Exception as e:
             raise exception(e, sys)

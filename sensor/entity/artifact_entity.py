@@ -45,3 +45,9 @@ class ModelEvalutionArtifact:
     trained_model_file_path: str
     best_model_evalution_metrics: ModelEvalutionMetrics
     trained_model_evalution_metrics: ModelEvalutionMetrics
+
+
+@dataclass
+class ModelPusherArtifact:
+    saved_model_path: str
+    model_path: str
