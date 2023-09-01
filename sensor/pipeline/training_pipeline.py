@@ -17,6 +17,8 @@ from sensor.components.model_pusher import ModelPusher
 
 class TrainPipeline:
 
+    is_training_pipeline_running = False
+
     def __init__(self):
 
         self.training_pipeline_config = TrainingPipelineConfig()
@@ -110,6 +112,8 @@ class TrainPipeline:
 
     def run_pipeline(self) -> None:
         try:
+            TrainPipeline.is_training_pipeline_running = True
+
             data_ingestion_artifact = self.start_data_ingestion()
 
             data_validation_artifact = self.start_data_validation(
@@ -128,4 +132,5 @@ class TrainPipeline:
                 model_evalution_artifact)
 
         except Exception as e:
+            TrainPipeline.is_training_pipeline_running = False
             raise exception(e, sys)
