@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from sensor.configuration.mango_db_connection import MongoDBClient
+from sensor.config.mango_db_connection import MongoDBClient
 from sensor.constant.database import DATABASE_NAME
 
 from sensor.logger import logging

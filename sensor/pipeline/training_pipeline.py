@@ -14,6 +14,10 @@ from sensor.components.model_trainer import ModelTrainer
 from sensor.components.model_evalution import ModelEvalution
 from sensor.components.model_pusher import ModelPusher
 
+from sensor.cloud_storage.s3_syncer import *
+from sensor.constant.s3_bucket import *
+from sensor.constant.training_pipeline import *
+
 
 class TrainPipeline:
 
@@ -110,6 +114,30 @@ class TrainPipeline:
         except Exception as e:
             raise exception(e, sys)
 
+    def sync_model_artifact(self):
+        try:
+            logging.info("Syncing the artifact directory to S3 Bucket")
+
+            s3_bucket_url = f"s3://{TRAINING_BUCKET_NAME}//artifact//{self.training_pipeline_config.timestamp}"
+            sync_folder_to_s3(
+                folder=self.training_pipeline_config.artifact_dir, bucket_url=s3_bucket_url)
+
+            logging.info("Successfully synced artifact dorectory to AWS")
+        except Exception as e:
+            raise exception(e, sys)
+
+    def sync_saved_model_dir(self):
+        try:
+            logging.info("Syncing the saved model directory to S3 bucket")
+
+            s3_bucket_url = f"s3://{TRAINING_BUCKET_NAME}//SAVED_MODEL_DIR"
+            sync_folder_to_s3(folder=SAVED_MODEL_DIR, bucket_url=s3_bucket_url)
+            logging.info(
+                "Successfully synced the saved model directory to S3 bucket")
+
+        except Exception as e:
+            raise exception(e, sys)
+
     def run_pipeline(self) -> None:
         try:
             TrainPipeline.is_training_pipeline_running = True
@@ -128,8 +156,23 @@ class TrainPipeline:
             model_evalution_artifact = self.start_model_evalution(
                 model_training_artifact, data_validation_artifact)
 
+            if not model_evalution_artifact.is_model_accepted:
+                raise Exception(
+                    "The Trained model is not better than the best model available")
+
             model_pusher_artifact = self.start_model_pusher(
                 model_evalution_artifact)
+
+            set_aws_env_variable()
+
+            self.sync_model_artifact()
+
+            self.sync_saved_model_dir()
+
+            TrainPipeline.is_training_pipeline_running = False
+
+            logging.info(
+                "Setting up the Access and Secret Keys as env variables")
 
         except Exception as e:
             TrainPipeline.is_training_pipeline_running = False

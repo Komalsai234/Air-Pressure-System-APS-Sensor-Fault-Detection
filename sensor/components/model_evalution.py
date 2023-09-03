@@ -77,8 +77,13 @@ class ModelEvalution:
 
             logging.info("Loading the train model and latest model")
 
+            logging.info(self.model_trainer_artifact.trained_model_obj_path)
+
             trained_model = load_obj_file(
                 self.model_trainer_artifact.trained_model_obj_path)
+
+            logging.info(best_model_file_path)
+
             latest_model = load_obj_file(best_model_file_path)
 
             logging.info(
@@ -109,6 +114,7 @@ class ModelEvalution:
 
             model_evalution_artifact = ModelEvalutionArtifact(
                 is_model_accepted=is_model_accepted,
+                model_improved_accuracy=imporved_accuracy,
                 best_model_file_path=best_model_file_path,
                 trained_model_file_path=self.model_trainer_artifact.trained_model_obj_path,
                 best_model_evalution_metrics=latest_model_metrics,
@@ -118,7 +124,7 @@ class ModelEvalution:
             logging.info("Creating a yaml file for model evalution")
 
             write_yaml_file(
-                self.model_evalution_config.model_evalution_report_file_path, model_evalution_artifact)
+                self.model_evalution_config.model_evalution_report_file_path, model_evalution_artifact, replace=False)
 
             return model_evalution_artifact
 

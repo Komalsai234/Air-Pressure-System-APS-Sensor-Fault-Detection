@@ -3,7 +3,7 @@ import os
 import sys
 
 from sensor.exception import exception
-from sensor.constant.training_pipeline import SAVED_MODEL_DIR
+from sensor.constant.training_pipeline import SAVED_MODEL_DIR, MODEL_FILE_NAME
 
 
 class Target_Value_Encoder:
@@ -47,7 +47,7 @@ class TrainedModelResolver:
             latest_model_timestamp = max(latest_time_stamp)
 
             latest_model_file_path = os.path.join(
-                SAVED_MODEL_DIR, f"{latest_model_timestamp}")
+                SAVED_MODEL_DIR, f"{latest_model_timestamp}", MODEL_FILE_NAME)
 
             return latest_model_file_path
 
@@ -63,7 +63,7 @@ class TrainedModelResolver:
             if len(os.listdir(self.saved_model_dir)) == 0:
                 return False
 
-            latest_model_path = self.get_best_model_file_path
+            latest_model_path = self.get_best_model_file_path()
 
             if not os.path.exists(latest_model_path):
                 return False

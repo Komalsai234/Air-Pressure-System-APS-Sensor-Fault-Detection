@@ -7,4 +7,7 @@ scipy
 imbalanced-learn==0.10.1
 joblib
 xgboost
+fastapi
+uvicorn
+python-multipart
 -e .
