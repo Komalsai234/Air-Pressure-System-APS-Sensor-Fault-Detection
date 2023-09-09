@@ -36,7 +36,7 @@ class SensorModelTrainer:
 
 class TrainedModelResolver:
 
-    def __init__(self, saved_model_dir=SAVED_MODEL_DIR):
+    def __init__(self, saved_model_dir):
         self.saved_model_dir = saved_model_dir
 
     def get_best_model_file_path(self):

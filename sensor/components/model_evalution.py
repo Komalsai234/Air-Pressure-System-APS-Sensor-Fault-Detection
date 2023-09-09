@@ -47,7 +47,8 @@ class ModelEvalution:
             df_target = target_value_encoding.target_column_encoding(
                 data_frame_target)
 
-            model_resolver = TrainedModelResolver()
+            model_resolver = TrainedModelResolver(
+                saved_model_dir=SAVED_MODEL_DIR)
 
             logging.info("Checking if the saved_model directory exsist or not")
 

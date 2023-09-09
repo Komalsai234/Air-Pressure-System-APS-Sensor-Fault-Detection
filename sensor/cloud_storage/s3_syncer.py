@@ -12,6 +12,6 @@ def sync_folder_to_s3(folder: str, bucket_url: str):
     os.system(command=command)
 
 
-def sync_folder_from_s3(folder: str, bucket_url: str):
-    command = "aws s3 sync {bucket_url} {folder}"
+def sync_folder_from_s3(bucket_url: str, folder: str):
+    command = f"aws s3 sync {bucket_url} {folder}"
     os.system(command=command)

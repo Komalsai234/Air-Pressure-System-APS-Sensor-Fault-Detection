@@ -1,0 +1,8 @@
+artifact/
+saved_models/
+venv/
+.git/
+S3_BUCKET_MODELS/
+Sensor_Fault_Detection.egg-info/
+prediction/
+prediction

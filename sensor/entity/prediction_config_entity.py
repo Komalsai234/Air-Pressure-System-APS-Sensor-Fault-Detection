@@ -13,9 +13,10 @@ TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 class PredictionPipelineConfig:
     pipeline_name: str = PIPELINE_NAME
 
-    artifact_dir: str = os.path.join(ARTIFACT_DIR, TIMESTAMP)
+    prediction_dir: str = os.path.join(PREDICTION_DIR, TIMESTAMP)
 
     timestamp: str = TIMESTAMP
 
-    prediction_file_path = os.path.join(
-        pipeline_name, artifact_dir, PREDICTION_FILE_NAME)
+    prediction_file_path = os.path.join(prediction_dir, PREDICTION_FILE_NAME)
+
+    saved_models_s3 = os.path.join(SAVED_MODELS_S3_BUCKET)

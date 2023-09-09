@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 def get_requirements() -> str:
 
-    file_path = "C:\\Users\\hp\\Desktop\\Sensor-Fault-Detection\\requirements.txt"
+    file_path = "requirements.txt"
 
     HypenEDot = '-e .'
 

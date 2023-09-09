@@ -4,8 +4,10 @@ from starlette.responses import RedirectResponse, FileResponse
 from fastapi.responses import Response
 from sensor.constant.application import *
 from sensor.pipeline.training_pipeline import TrainPipeline
+from sensor.pipeline.prediction_pipeline import PredictionPipeline
+from sensor.entity.prediction_config_entity import PredictionPipelineConfig
 from sensor.ml.model.estimator import TrainedModelResolver
-from sensor.untils.main_unitls import load_obj_file
+from sensor.untils.main_unitls import load_obj_file, load_numpy_file
 from sensor.constant.training_pipeline import *
 from sensor.logger import logging
 from sensor.exception import exception
@@ -41,17 +43,16 @@ def predict_pipeline(csv_file: UploadFile):
     if not csv_file.filename.endswith(".csv"):
         return Response("The Upload file should be .csv format")
 
-    df = pd.read_csv(csv_file.file)
+    df = pd.read_csv(csv_file.file, header=None)
 
-    model_resolver = TrainedModelResolver(saved_model_dir=SAVED_MODEL_DIR)
+    prediction_config = PredictionPipelineConfig()
 
-    best_model = load_obj_file(
-        file_path=model_resolver.get_best_model_file_path())
+    prediction_pipeline = PredictionPipeline(
+        prediction_config=prediction_config)
 
-    y_pred = best_model.predict(df)
-    prediction = pd.DataFrame(y_pred)
+    prediction = prediction_pipeline.run_prediction(df)
 
-    prediction.to_csv('prediction.csv')
+    prediction.to_csv("prediction.csv", header=None, index=None)
 
     return FileResponse('prediction.csv', filename='prediction.csv')
 
