@@ -79,8 +79,8 @@ jobs:
           docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
 
       - name: Stop and remove sensor container if running
-        run: |
-          docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
+        # run: |
+        #   docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
 
       - name: Run Docker Image to serve users
         run: |
