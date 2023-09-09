@@ -57,7 +57,7 @@ jobs:
           # push it to ECR so that it can
           # be deployed to ECS.
           docker build -t $DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG .
-          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD && docker push $DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG:IMAGE_TAG
+          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD && docker push $DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG"
 
   Continuous-Deployment:
