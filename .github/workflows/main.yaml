@@ -25,7 +25,7 @@ jobs:
       - name: Run unit tests
         run: echo "Running unit tests"
 
-build-and-push-ecr-image:
+  build-and-push-ecr-image:
     name: Continuous Delivery
     needs: integration
     runs-on: ubuntu-latest
@@ -37,6 +37,7 @@ build-and-push-ecr-image:
         run: |
           sudo apt-get update
           sudo apt-get install -y jq unzip
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -62,8 +63,8 @@ build-and-push-ecr-image:
           docker build -t $DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG .
           docker push $DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$DOCKER_HUB_USERNAME/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG"
-          
-Continuous-Deployment:
+
+  Continuous-Deployment:
     needs: build-and-push-ecr-image
     runs-on: self-hosted
     steps:
@@ -80,20 +81,19 @@ Continuous-Deployment:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      
-      
+
       - name: Pull latest images
         run: |
-         docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
+          docker pull ${{secrets.DOCKER_HUB_USERNAME}}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
 
       - name: Stop and remove sensor container if running
         run: |
-         docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
-       
+          docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
+
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 80:8080 --name=sensor -e 'MONGO_DB_URL=${{ secrets.MONGO_DB_URL }}' -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.DOCKER_HUB_USERNAME}}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
+          docker run -d -p 80:8080 --name=sensor -e 'MONGO_DB_URL=${{ secrets.MONGO_DB_URL }}' -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.DOCKER_HUB_USERNAME}}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
 
       - name: Clean previous images and containers
         run: |
-         docker system prune -f
+          docker system prune -f
