@@ -2,10 +2,10 @@ pymongo[srv]==4.2.0
 certifi
 pandas
 numpy
-scikit-learn
 pyyaml
 scipy
-imbalanced-learn==0.10.1
+scikit-learn==0.24.2
+imbalanced-learn==0.8.0
 joblib
 xgboost
 fastapi
