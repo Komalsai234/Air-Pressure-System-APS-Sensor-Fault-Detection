@@ -82,7 +82,7 @@ jobs:
 
       - name: Stop and remove sensor container if running
         run: |
-          docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
+          docker stop $(docker ps -q --filter "status=running") && docker rm $(docker ps -qa --filter "status=exited")
 
       - name: Run Docker Image to serve users
         run: |
