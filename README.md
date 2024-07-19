@@ -1,56 +1,88 @@
-# Sensor-Fault-Detection
+
+# Air Pressure System (APS) Sensor Fault Detection
 
 ## Problem Statement
 The Air Pressure System (APS) is a critical component of a heavy-duty vehicle that uses compressed air to force a piston to provide pressure to the brake pads, slowing the vehicle down. The benefits of using an APS instead of a hydraulic system are the easy availability and long-term sustainability of natural air.
 
 This is a Binary Classification problem, in which the affirmative class indicates that the failure was caused by a certain component of the APS, while the negative class indicates that the failure was caused by something else.
 
-## Solution Proposed
-In this project, the system in focus is the Air Pressure system (APS) which generates pressurized air that are utilized in various functions in a truck, such as braking and gear changes. The datasets positive class corresponds to component failures for a specific component of the APS system. The negative class corresponds to trucks with failures for components not related to the APS system.
+## Dataset Description
+- The training set contains 36188 examples in total in which 35188 belong to the negative class and 1000 positive.
 
-The problem is to reduce the cost due to unnecessary repairs. So it is required to minimize the false predictions.
+- The attribute names of the data have been anonymized for proprietary reasons. It consists of both single numerical counters and histograms consisting of bins with different conditions.
 
-## Tech Stack Used
+- In total there are 171 attributes and one target variable.
+
+- Link for Dataset: https://drive.google.com/file/d/1jHWPdnzAKZIVFI5_UxaG-A6yV6E5mVGf/view?usp=sharing
+
+
+## Tecnologies Used
 - Python
 - FastAPI
-- Machine learning algorithms
+- Machine Learning Algorithms
 - Docker
 - MongoDB
+- Github Action
+- AWS Kinesis
 
-## Infrastructure Required.
-- AWS S3
-- AWS EC2
-- AWS ECR
-- Git Actions
+## Prerequisites
+- Python 3.9 or higher
+- Docker
+- AWS Account
 
-## How to run?
-Before we run the project, make sure that you are having MongoDB in your local system, with Compass since we are using MongoDB for data storage. You also need AWS account to access the service like S3, ECR and EC2 instances.
+## Archietecture
 
-Data Collections
+- Data Collection
 
-Project Archietecture
+![Data Collection](workflow/data-collection.png)
 
-Deployment Archietecture
+- Project
 
+![Project](workflow/project.png)
 
-Step 1: Clone the repository
-git clone https://github.com/komalsai234/Sensor-Fault-Detection.git
-Step 2- Create a conda environment after opening the repository
-conda create -n sensor python=3.7.6 -y
-conda activate sensor
-Step 3 - Install the requirements
-pip install -r requirements.txt
-Step 4 - Export the environment variable
-export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
+- Deployment
 
-export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
+![Deployment](workflow/deployment.png)
 
-export AWS_DEFAULT_REGION=<AWS_DEFAULT_REGION>
+### Installation
+1. **Clone the repository**
+    ```bash
+    git clone 
+    ```
 
-export MONGODB_URL="mongodb+srv://<username>:<password>@ineuron-ai-projects.7eh1w4s.mongodb.net/?retryWrites=true&w=majority"
-Step 5 - Run the application server
-python app.py
-Step 6. Train application
-http://localhost:8080/train
-Step 7. Prediction application
-http://localhost:8080/predict
+2. **Create Conda Environment**
+    ```bash
+    conda create -p aps-sensor python==3.9 -y
+    ```
+
+3. **Activate the Environment and Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+
+4. **Configure the Environment Variables**
+    ```bash
+    export AWS_ACCESS_KEY_ID=<AWS_ACCESS_KEY_ID>
+
+    export AWS_SECRET_ACCESS_KEY=<AWS_SECRET_ACCESS_KEY>
+
+    export AWS_DEFAULT_REGION=<AWS_DEFAULT_REGION>
+
+    export MONGODB_URL="mongodb+srv://<username>:<password>@ineuron-ai-projects.7eh1w4s.mongodb.net/?retryWrites=true&w=majority"
+
+    ```
+  
+## Usage
+1. **Run the Fast API Application**
+    ```bash
+    python main.py
+    ```
+
+2. **To Trigger Training Pipeline**
+    ```
+    http://localhost:8080/train
+    ```
+
+3. **For Prediction**
+    ```
+    http://localhost:8080/predict
+    ```
