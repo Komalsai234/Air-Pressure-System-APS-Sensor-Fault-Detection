@@ -34,7 +34,8 @@ This is a Binary Classification problem, in which the affirmative class indicate
 
 ### Data Collection
 
-![DataCollection](workflow/data collection.png)
+![Data Collection](workflow/data_collection.png)
+
 
 ### Project
 
