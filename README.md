@@ -32,15 +32,15 @@ This is a Binary Classification problem, in which the affirmative class indicate
 
 ## Archietecture
 
-- Data Collection
+### Data Collection
 
-![Data Collection](workflow/data-collection.png)
+![DataCollection](workflow/data collection.png)
 
-- Project
+### Project
 
 ![Project](workflow/project.png)
 
-- Deployment
+### Deployment
 
 ![Deployment](workflow/deployment.png)
 
