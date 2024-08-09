@@ -49,7 +49,7 @@ This is a Binary Classification problem, in which the affirmative class indicate
 ### Installation
 1. **Clone the repository**
     ```bash
-    git clone 
+    git clone https://github.com/Komalsai234/Air-Pressure-System-APS-Sensor-Fault-Detection.git
     ```
 
 2. **Create Conda Environment**
