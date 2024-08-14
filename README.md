@@ -13,7 +13,7 @@ This is a Binary Classification problem, in which the affirmative class indicate
 
 - In total there are 171 attributes and one target variable.
 
-- Link for Dataset: https://drive.google.com/file/d/1jHWPdnzAKZIVFI5_UxaG-A6yV6E5mVGf/view?usp=sharing
+- Link for Dataset: https://www.kaggle.com/datasets/uciml/aps-failure-at-scania-trucks-data-set
 
 
 ## Tecnologies Used
